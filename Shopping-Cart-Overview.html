@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shopping Cart</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#3b82f6',secondary:'#10b981'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+input[type="number"] {
+-moz-appearance: textfield;
+}
+.custom-checkbox {
+position: relative;
+display: inline-block;
+width: 20px;
+height: 20px;
+cursor: pointer;
+}
+.custom-checkbox input {
+opacity: 0;
+position: absolute;
+}
+.checkmark {
+position: absolute;
+top: 0;
+left: 0;
+height: 20px;
+width: 20px;
+background-color: white;
+border: 2px solid #e5e7eb;
+border-radius: 4px;
+transition: all 0.2s ease;
+}
+.custom-checkbox input:checked ~ .checkmark {
+background-color: #3b82f6;
+border-color: #3b82f6;
+}
+.checkmark:after {
+content: "";
+position: absolute;
+display: none;
+}
+.custom-checkbox input:checked ~ .checkmark:after {
+display: block;
+}
+.custom-checkbox .checkmark:after {
+left: 6px;
+top: 2px;
+width: 6px;
+height: 10px;
+border: solid white;
+border-width: 0 2px 2px 0;
+transform: rotate(45deg);
+}
+.cart-item {
+transform: translateX(0);
+transition: transform 0.3s ease;
+}
+.delete-action {
+position: absolute;
+right: 0;
+top: 0;
+height: 100%;
+display: flex;
+align-items: center;
+justify-content: center;
+background-color: #ef4444;
+color: white;
+width: 80px;
+transform: translateX(100%);
+}
+</style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+<header class="bg-white shadow-sm fixed top-0 left-0 right-0 z-10">
+<div class="container mx-auto px-4 h-16 flex items-center justify-between">
+<button class="w-10 h-10 flex items-center justify-center text-gray-700">
+<i class="ri-arrow-left-line ri-lg"></i>
+</button>
+<h1 class="text-xl font-semibold text-gray-800">Shopping Cart</h1>
+<button class="text-primary font-medium">Edit</button>
+</div>
+</header>
+<main class="container mx-auto px-4 pt-20 pb-32">
+<div id="cartContent">
+<div class="cart-items space-y-4 mb-6">
+<div class="cart-item bg-white rounded shadow-sm p-4 relative overflow-hidden">
+<div class="flex gap-4">
+<label class="custom-checkbox self-start mt-1">
+<input type="checkbox" checked>
+<span class="checkmark"></span>
+</label>
+<div class="w-24 h-24 bg-gray-100 rounded overflow-hidden flex-shrink-0">
+<img src="https://readdy.ai/api/search-image?query=luxury%20designer%20eyeglasses%20with%20gold%20metal%20frame%20and%20transparent%20lenses%20on%20clean%20white%20background%2C%20elegant%20product%20photography%2C%20high%20resolution%2C%20professional%20studio%20lighting%2C%20sharp%20details&width=240&height=240&seq=1&orientation=squarish" alt="Designer Glasses" class="w-full h-full object-cover object-top">
+</div>
+<div class="flex-1">
+<div class="flex justify-between">
+<h3 class="font-medium text-gray-800">Designer Gold Frame Glasses</h3>
+<span class="font-semibold text-gray-900">$249.99</span>
+</div>
+<p class="text-sm text-gray-500 mt-1">Gold / Medium</p>
+<div class="flex justify-between items-center mt-4">
+<div class="flex items-center border border-gray-300 rounded-button overflow-hidden">
+<button class="w-8 h-8 flex items-center justify-center text-gray-500 bg-gray-50 border-r border-gray-300">
+<i class="ri-subtract-line"></i>
+</button>
+<input type="number" value="1" min="1" class="w-10 h-8 text-center border-none text-sm" />
+<button class="w-8 h-8 flex items-center justify-center text-gray-500 bg-gray-50 border-l border-gray-300">
+<i class="ri-add-line"></i>
+</button>
+</div>
+<button class="w-8 h-8 flex items-center justify-center text-gray-400">
+<i class="ri-delete-bin-line"></i>
+</button>
+</div>
+</div>
+</div>
+<div class="delete-action">
+<span>Delete</span>
+</div>
+</div>
+<div class="cart-item bg-white rounded shadow-sm p-4 relative overflow-hidden">
+<div class="flex gap-4">
+<label class="custom-checkbox self-start mt-1">
+<input type="checkbox" checked>
+<span class="checkmark"></span>
+</label>
+<div class="w-24 h-24 bg-gray-100 rounded overflow-hidden flex-shrink-0">
+<img src="https://readdy.ai/api/search-image?query=modern%20round%20sunglasses%20with%20black%20acetate%20frame%20and%20gradient%20lenses%20on%20clean%20white%20background%2C%20luxury%20product%20photography%2C%20high%20resolution%2C%20professional%20studio%20lighting%2C%20sharp%20details&width=240&height=240&seq=2&orientation=squarish" alt="Round Sunglasses" class="w-full h-full object-cover object-top">
+</div>
+<div class="flex-1">
+<div class="flex justify-between">
+<h3 class="font-medium text-gray-800">Round Frame Sunglasses</h3>
+<span class="font-semibold text-gray-900">$179.50</span>
+</div>
+<p class="text-sm text-gray-500 mt-1">Black / Medium</p>
+<div class="flex justify-between items-center mt-4">
+<div class="flex items-center border border-gray-300 rounded-button overflow-hidden">
+<button class="w-8 h-8 flex items-center justify-center text-gray-500 bg-gray-50 border-r border-gray-300">
+<i class="ri-subtract-line"></i>
+</button>
+<input type="number" value="1" min="1" class="w-10 h-8 text-center border-none text-sm" />
+<button class="w-8 h-8 flex items-center justify-center text-gray-500 bg-gray-50 border-l border-gray-300">
+<i class="ri-add-line"></i>
+</button>
+</div>
+<button class="w-8 h-8 flex items-center justify-center text-gray-400">
+<i class="ri-delete-bin-line"></i>
+</button>
+</div>
+</div>
+</div>
+<div class="delete-action">
+<span>Delete</span>
+</div>
+</div>
+<div class="cart-item bg-white rounded shadow-sm p-4 relative overflow-hidden">
+<div class="flex gap-4">
+<label class="custom-checkbox self-start mt-1">
+<input type="checkbox" checked>
+<span class="checkmark"></span>
+</label>
+<div class="w-24 h-24 bg-gray-100 rounded overflow-hidden flex-shrink-0">
+<img src="https://readdy.ai/api/search-image?query=classic%20aviator%20style%20prescription%20glasses%20with%20silver%20metal%20frame%20and%20blue%20light%20blocking%20lenses%20on%20clean%20white%20background%2C%20luxury%20product%20photography%2C%20high%20resolution%2C%20professional%20studio%20lighting%2C%20sharp%20details&width=240&height=240&seq=3&orientation=squarish" alt="Aviator Glasses" class="w-full h-full object-cover object-top">
+</div>
+<div class="flex-1">
+<div class="flex justify-between">
+<h3 class="font-medium text-gray-800">Blue Light Blocking Aviators</h3>
+<span class="font-semibold text-gray-900">$199.00</span>
+</div>
+<p class="text-sm text-gray-500 mt-1">Silver / Large</p>
+<div class="flex justify-between items-center mt-4">
+<div class="flex items-center border border-gray-300 rounded-button overflow-hidden">
+<button class="w-8 h-8 flex items-center justify-center text-gray-500 bg-gray-50 border-r border-gray-300">
+<i class="ri-subtract-line"></i>
+</button>
+<input type="number" value="1" min="1" class="w-10 h-8 text-center border-none text-sm" />
+<button class="w-8 h-8 flex items-center justify-center text-gray-500 bg-gray-50 border-l border-gray-300">
+<i class="ri-add-line"></i>
+</button>
+</div>
+<button class="w-8 h-8 flex items-center justify-center text-gray-400">
+<i class="ri-delete-bin-line"></i>
+</button>
+</div>
+</div>
+</div>
+<div class="delete-action">
+<span>Delete</span>
+</div>
+</div>
+</div>
+<div class="bg-white rounded shadow-sm p-5 mb-6">
+<h2 class="text-lg font-medium text-gray-800 mb-4">Order Summary</h2>
+<div class="space-y-3">
+<div class="flex justify-between text-gray-600">
+<span>Subtotal (3 items)</span>
+<span class="font-medium text-gray-800">$628.49</span>
+</div>
+<div class="flex justify-between text-gray-600">
+<span>Shipping</span>
+<span class="font-medium text-gray-800">Free</span>
+</div>
+<div class="flex justify-between text-gray-600">
+<span>Tax</span>
+<span class="font-medium text-gray-800">$62.85</span>
+</div>
+<div class="pt-3 border-t border-gray-200">
+<div class="flex justify-between">
+<span class="font-medium text-gray-800">Total</span>
+<span class="font-semibold text-gray-900">$691.34</span>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-white rounded shadow-sm p-5">
+<h2 class="text-lg font-medium text-gray-800 mb-4">Payment Methods</h2>
+<div class="space-y-3">
+<div class="flex items-center p-3 border border-gray-200 rounded">
+<input type="radio" id="credit-card" name="payment" class="hidden" checked>
+<label for="credit-card" class="w-5 h-5 rounded-full border-2 border-primary flex items-center justify-center mr-3">
+<span class="w-2.5 h-2.5 rounded-full bg-primary"></span>
+</label>
+<div class="flex items-center">
+<div class="w-8 h-8 flex items-center justify-center text-blue-600 mr-2">
+<i class="ri-visa-fill ri-lg"></i>
+</div>
+<span class="text-gray-700">Credit Card (**** 4582)</span>
+</div>
+</div>
+<div class="flex items-center p-3 border border-gray-200 rounded">
+<input type="radio" id="paypal" name="payment" class="hidden">
+<label for="paypal" class="w-5 h-5 rounded-full border-2 border-gray-300 flex items-center justify-center mr-3">
+<span class="w-2.5 h-2.5 rounded-full bg-white"></span>
+</label>
+<div class="flex items-center">
+<div class="w-8 h-8 flex items-center justify-center text-blue-800 mr-2">
+<i class="ri-paypal-fill ri-lg"></i>
+</div>
+<span class="text-gray-700">PayPal</span>
+</div>
+</div>
+<div class="flex items-center p-3 border border-gray-200 rounded">
+<input type="radio" id="apple-pay" name="payment" class="hidden">
+<label for="apple-pay" class="w-5 h-5 rounded-full border-2 border-gray-300 flex items-center justify-center mr-3">
+<span class="w-2.5 h-2.5 rounded-full bg-white"></span>
+</label>
+<div class="flex items-center">
+<div class="w-8 h-8 flex items-center justify-center text-black mr-2">
+<i class="ri-apple-fill ri-lg"></i>
+</div>
+<span class="text-gray-700">Apple Pay</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="emptyCart" class="hidden flex flex-col items-center justify-center py-16">
+<div class="w-24 h-24 flex items-center justify-center text-gray-300 mb-6">
+<i class="ri-shopping-cart-line ri-4x"></i>
+</div>
+<h2 class="text-xl font-medium text-gray-800 mb-2">Your cart is empty</h2>
+<p class="text-gray-500 mb-6 text-center">Looks like you haven't added anything to your cart yet.</p>
+<button class="bg-primary text-white py-3 px-6 rounded-button font-medium !whitespace-nowrap">Continue Shopping</button>
+</div>
+</main>
+<div class="fixed bottom-0 left-0 right-0 bg-white shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] p-4 z-10">
+<div class="container mx-auto flex items-center justify-between">
+<div>
+<p class="text-sm text-gray-500">Total</p>
+<p class="text-xl font-semibold text-gray-900">$691.34</p>
+</div>
+<button class="bg-primary text-white py-3 px-8 rounded-button font-medium !whitespace-nowrap">Proceed to Checkout</button>
+</div>
+</div>
+<script id="cartInteractions">
+document.addEventListener('DOMContentLoaded', function() {
+// Quantity adjusters
+const minusBtns = document.querySelectorAll('.ri-subtract-line');
+const plusBtns = document.querySelectorAll('.ri-add-line');
+minusBtns.forEach(btn => {
+btn.parentElement.addEventListener('click', function() {
+const input = this.parentElement.querySelector('input');
+const value = parseInt(input.value);
+if (value > 1) {
+input.value = value - 1;
+}
+});
+});
+plusBtns.forEach(btn => {
+btn.parentElement.addEventListener('click', function() {
+const input = this.parentElement.querySelector('input');
+const value = parseInt(input.value);
+input.value = value + 1;
+});
+});
+// Delete buttons
+const deleteBtns = document.querySelectorAll('.ri-delete-bin-line');
+deleteBtns.forEach(btn => {
+btn.parentElement.addEventListener('click', function() {
+const cartItem = this.closest('.cart-item');
+cartItem.style.height = cartItem.offsetHeight + 'px';
+cartItem.style.marginTop = '0';
+cartItem.style.marginBottom = '0';
+setTimeout(() => {
+cartItem.style.height = '0';
+cartItem.style.padding = '0';
+cartItem.style.overflow = 'hidden';
+}, 10);
+setTimeout(() => {
+cartItem.remove();
+checkCartEmpty();
+}, 300);
+});
+});
+// Custom radio buttons
+const radioLabels = document.querySelectorAll('label[for^="credit-card"], label[for^="paypal"], label[for^="apple-pay"]');
+radioLabels.forEach(label => {
+label.addEventListener('click', function() {
+const radioId = this.getAttribute('for');
+const radio = document.getElementById(radioId);
+document.querySelectorAll('input[name="payment"]').forEach(r => {
+r.checked = false;
+r.nextElementSibling.querySelector('span').style.backgroundColor = 'white';
+r.nextElementSibling.classList.remove('border-primary');
+r.nextElementSibling.classList.add('border-gray-300');
+});
+radio.checked = true;
+this.querySelector('span').style.backgroundColor = '#3b82f6';
+this.classList.remove('border-gray-300');
+this.classList.add('border-primary');
+});
+});
+// Check if cart is empty
+function checkCartEmpty() {
+const cartItems = document.querySelectorAll('.cart-item');
+if (cartItems.length === 0) {
+document.getElementById('cartContent').style.display = 'none';
+document.getElementById('emptyCart').style.display = 'flex';
+}
+}
+// Swipe to delete functionality (simulated)
+let startX, moveX;
+const cartItems = document.querySelectorAll('.cart-item');
+cartItems.forEach(item => {
+item.addEventListener('touchstart', function(e) {
+startX = e.touches[0].clientX;
+}, { passive: true });
+item.addEventListener('touchmove', function(e) {
+moveX = e.touches[0].clientX;
+const diff = startX - moveX;
+if (diff > 0 && diff < 80) {
+this.style.transform = `translateX(-${diff}px)`;
+}
+}, { passive: true });
+item.addEventListener('touchend', function() {
+if (startX - moveX > 40) {
+this.style.transform = 'translateX(-80px)';
+} else {
+this.style.transform = 'translateX(0)';
+}
+});
+});
+});
+</script>
+<script id="toggleEmptyCart">
+document.addEventListener('DOMContentLoaded', function() {
+// For demo purposes - toggle between empty and filled cart
+const continueShoppingBtn = document.querySelector('#emptyCart button');
+continueShoppingBtn.addEventListener('click', function() {
+document.getElementById('emptyCart').style.display = 'none';
+document.getElementById('cartContent').style.display = 'block';
+});
+// Uncomment to test empty cart
+// document.getElementById('cartContent').style.display = 'none';
+// document.getElementById('emptyCart').style.display = 'flex';
+});
+</script>
+</body>
+</html>
